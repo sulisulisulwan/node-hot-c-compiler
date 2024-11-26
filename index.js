@@ -1,3 +1,3 @@
-import AutoCompilerForC from "./lib/compiler.js";
+import Compiler from "./lib/compiler.js";
 
-export default AutoCompilerForC
+export default Compiler
