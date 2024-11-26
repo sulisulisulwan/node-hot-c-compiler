@@ -1,6 +1,6 @@
 {
   "name": "autocompilerforc",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A file watch tool for compiling C project files",
   "type": "module",
   "main": "index.js",
