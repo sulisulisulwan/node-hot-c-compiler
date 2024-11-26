@@ -16,8 +16,3 @@ export interface iConfig {
   compilerType: 'c++' | 'c'
   watch: boolean
 }
-
-export interface iDependencies {
-  dependencies: DependencyList
-  tree: iFileDependencyNode
-}

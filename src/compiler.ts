@@ -3,7 +3,7 @@ import { watch, readFile, readdir } from 'node:fs/promises'
 import * as path from 'path'
 import * as fs from 'fs'
 import chalk from 'chalk'
-import { iConfig, iFileDependencyNode } from './types.js'
+import { iConfig } from './types.js'
 import CProjectTree from './CProjectTree.js'
 
 
@@ -40,9 +40,9 @@ class Compiler {
   protected async executeBuild(srcPath: string) {
     this.cProjectTree.loadCFileMap(this.cFilePaths)
 
-    const dependencyTree = await this.cProjectTree.buildTree(srcPath) // tree of dependencies (look at iFileDependencyNode)
+    const depData = await this.cProjectTree.getData(srcPath) // tree of dependencies (look at iFileDependencyNode)
     const mainFilePath = this.config.rootPath + '/' + this.config.rootFile
-    const fullCFilePaths = [mainFilePath].concat(dependencyTree.dependencies.getDependencies())
+    const fullCFilePaths = [mainFilePath].concat(depData.getList())
     const buildCommand = this.constructBuildCommand(fullCFilePaths) 
 
     this.buildOutputDir()

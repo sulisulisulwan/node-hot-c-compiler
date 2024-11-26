@@ -1,8 +1,9 @@
 import { readFile } from 'node:fs/promises'
 import path from 'path'
-import { iConfig, iDependencies, iFileDependencyNode } from './types.js'
+import { iConfig, iFileDependencyNode } from './types.js'
 import ParseIncludes from './ParseIncludes.js'
 import DependencyList from './DependencyList.js'
+import DependencyData from './DependencyData.js'
 
 
 class CProjectTree {
@@ -33,17 +34,13 @@ class CProjectTree {
     this.cFilePaths = cFileMap
   }
 
-  public async buildTree(rootPath: string): Promise<iDependencies> {
-
+  public async getData(rootPath: string): Promise<DependencyData> {
     if (!this.cFilePaths) {
       throw new Error('this.cFileMap is null.  Must be loaded before calling this.buildTree')
     }
     const file = await readFile(rootPath)
     const dependencyTree = await this.getAllLinkedDependenciesAsTree(rootPath, file.toString())
-    return {
-      dependencies: this.dependencyList,
-      tree: dependencyTree
-    }
+    return new DependencyData(this.dependencyList, dependencyTree)
   }
   
   private loadConfig(config: iConfig) {
